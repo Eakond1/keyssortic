@@ -2,17 +2,17 @@ from sortic import *
 
 number1 = []
 number2 = []
-sortirovka = []
+res = []
 num = 0
 into = ""
-
-
 while (num != '!'):
     num = input()
     if num != '!':
         int(num)
         number1.append(num)
-sortirovka = number1.sort()
+res = number1
+res.sort()
+print(res)
 while (into != '*'):
     into = str(input())
     if into != '*':
@@ -38,9 +38,8 @@ while (into != '*'):
             rrb(number2)
         elif into == "rrr":
             rrr(number1, number2)
-
-
-if sortirovka == number1:
+print(number1)
+if res == number1:
     print("OK")
 else:
     print("KO")
