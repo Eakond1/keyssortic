@@ -1,79 +1,81 @@
-def sa(a):
-    if len(a) > 1:
-        c = a[1]
-        a[1] = a[0]
-        a[0] = c
-        return a
+def s(lst):
+    if len(lst) > 1:
+        lst[0], lst[1] = lst[1], lst[0]
+    return lst
 
 
-def sb(b):
-    if len(b) > 1:
-        c = b[1]
-        b[1] = b[0]
-        b[0] = c
-        return b
+def ss(lst1, lst2):
+    return s(lst1), s(lst2)
 
 
-def ss(a, b):
-    a = sa(a)
-    b = sb(b)
-    return a, b
+def p(lst1, lst2):
+    if len(lst2) > 0:
+        lst1 = [lst2[0]] + lst1
+        lst2.pop(0)
+        return lst1, lst2
 
 
-def pa(a, b):
-    if len(b) > 0:
-        a = a[::-1]
-        a.append(b[0])
-        a = a[::-1]
-        return a
+def r(lst):
+    temp = lst.pop(0)
+    lst.append(temp)
+    return lst
 
 
-def pb(a, b):
-    if len(a) > 0:
-        b = b[::-1]
-        b.append(a[0])
-        b = b[::-1]
-        return b
+def rr(lst1, lst2):
+    return r(lst1), r(lst2)
 
 
-def ra(a):
-    a = a[::-1]
-    return a
+def rab(lst):
+    temp = lst.pop(len(lst) - 1)
+    lst = [temp] + lst
+    return lst
 
 
-def rb(b):
-    b = b[::-1]
-    return b
+def rrr(lst1, lst2):
+    return rab(lst1), rab(lst2)
 
 
-def rr(a, b):
-    a = ra(a)
-    b = rb(b)
-    return a, b
+def custom_sort(a):
+    b = []
+
+    while a != sorted(a):
+        while len(a) > 1:
+            if a[0] == max(a[0], a[1]):
+                b = r(p(b, a)[0])
+                print("pb")
+                print("rb")
+            else:
+                a = s(a)
+                b = r(p(b, a)[0])
+                print("sa")
+                print("pb")
+                print("rb")
+
+        while len(b) > 1:
+            if b[0] == min(b[0], b[1]):
+                a = r(p(a, b)[0])
+                print("pa")
+                print("ra")
+            else:
+                b = s(b)
+                a = r(p(a, b)[0])
+                print("sb")
+                print("pa")
+                print("ra")
+
+        a = r(p(a, b)[0])
+        print("pa")
+        print("ra")
+    print(a)
 
 
-def rra(a):
-    if len(a) > 0:
-        c = []
-        c.append(a[-1])
-        for i in range(len(a) - 1):
-            c.append(a[i])
-        a = c
-        return a
+a = []
+inp = input()
+while inp != "!":
+    a.append(int(inp))
+    inp = input()
 
+if len(a) > 0:
+    custom_sort(a)
 
-def rrb(b):
-    if len(b) > 0:
-        c = []
-        c.append(b[-1])
-        for i in range(len(b) - 1):
-            c.append(b[i])
-        b = c
-        return b
-
-
-def rrr(a, b):
-    a = rra(a)
-    b = rrb(b)
-    return a, b
 
