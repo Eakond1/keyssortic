@@ -1,72 +1,42 @@
-def s(lst):
-    if len(lst) > 1:
-        lst[0], lst[1] = lst[1], lst[0]
-    return lst
+from colorama import Fore
 
 
-def ss(lst1, lst2):
-    return s(lst1), s(lst2)
+def check_sorting(sp):
+    for i in range(len(sp)-1):
+        if sp[i] > sp[i+1]:
+            return False
+    return True
 
 
-def p(lst1, lst2):
-    if len(lst2) > 0:
-        lst1 = [lst2[0]] + lst1
-        lst2.pop(0)
-        return lst1, lst2
+def minimum(sp):
+    mi_sp = sp[0]
+    for i in sp:
+        if i < mi_sp:
+            mi_sp = i
+    return mi_sp
 
 
-def r(lst):
-    temp = lst.pop(0)
-    lst.append(temp)
-    return lst
+def pa_pb(sp1, sp2):
+    if len(sp2) > 0:
+        sp1.append(sp2[0])
+        rra_rrb_rrr(sp1)
+    return sp1, sp2
 
 
-def rr(lst1, lst2):
-    return r(lst1), r(lst2)
+def rra_rrb_rrr(sp):
+    num = sp[-1]
+    for i in range(len(sp), 0, -1):
+        sp[i-1] = sp[i-2]
+    sp[0] = num
+    return sp
 
 
-def rab(lst):
-    temp = lst.pop(len(lst) - 1)
-    lst = [temp] + lst
-    return lst
-
-
-def rrr(lst1, lst2):
-    return rab(lst1), rab(lst2)
-
-
-def custom_sort(a):
-    b = []
-
-    while a != sorted(a):
-        while len(a) > 1:
-            if a[0] == max(a[0], a[1]):
-                b = r(p(b, a)[0])
-                print("pb")
-                print("rb")
-            else:
-                a = s(a)
-                b = r(p(b, a)[0])
-                print("sa")
-                print("pb")
-                print("rb")
-
-        while len(b) > 1:
-            if b[0] == min(b[0], b[1]):
-                a = r(p(a, b)[0])
-                print("pa")
-                print("ra")
-            else:
-                b = s(b)
-                a = r(p(a, b)[0])
-                print("sb")
-                print("pa")
-                print("ra")
-
-        a = r(p(a, b)[0])
-        print("pa")
-        print("ra")
-    print(a)
+def ra(sp):
+    num = sp[-1]
+    for i in range(len(sp)):
+        sp[i-1] = sp[i]
+    sp[-2] = num
+    return sp
 
 
 a = []
@@ -75,7 +45,22 @@ while inp != "!":
     a.append(int(inp))
     inp = input()
 
-if len(a) > 0:
-    custom_sort(a)
+if not a:
+    print(Fore.RED + 'empty list')
+elif check_sorting(a):
+    print(Fore.GREEN + 'list already sorted')
+else:
+    b = []
+    while not check_sorting(a):
+        while a[0] != minimum(a):
+            ra(a)
+            print(Fore.BLUE + 'ra')
+        b.append(a[0])
+        a = a[1:]
+        print(Fore.YELLOW + 'pb')
+    for i in b:
+        pa_pb(a, b)
+        b = b[1:]
+        print(Fore.CYAN + 'pa')
 
-
+print(a)
