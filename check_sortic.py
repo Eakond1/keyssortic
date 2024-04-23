@@ -12,12 +12,13 @@ def pa_pb(a, b):
     if len(b) > 0:
         a = [b[0]] + a
         b.pop(0)
-        return a, b
+    return a, b
 
 
 def ra_rb(a):
-    c = a.pop(0)
-    a.append(c)
+    if len(a) > 0:
+        c = a.pop(0)
+        a.append(c)
     return a
 
 
